@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vecwy’s Pet Shop Hub</title>
+
+  <!-- Google Fonts Montserrat -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+      color: #eee;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(90deg, #ffb347, #ffcc33);
+      padding: 25px 0;
+      text-align: center;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #1f2937;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.4);
+      user-select: none;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 40px;
+      color: #fefefe;
+      text-align: center;
+    }
+
+    .store-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 30px;
+      width: 100%;
+    }
+
+    .store-card {
+      background: #1c1c1c;
+      border: 2px solid #2e2e2e;
+      border-radius: 18px;
+      padding: 30px 20px;
+      text-align: center;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .store-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 22px rgba(255, 179, 71, 0.35);
+      border-color: #ffb347;
+    }
+
+    .store-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #ffcc33;
+    }
+
+    .store-button {
+      display: inline-block;
+      background: #ffb347;
+      color: #1f1f1f;
+      padding: 14px 26px;
+      font-weight: 600;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .store-button:hover {
+      background: #ffcc33;
+      transform: scale(1.05);
+    }
+
+    .store-button.disabled {
+      background: #444;
+      color: #aaa;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .store-button.disabled:hover {
+      background: #444;
+      transform: none;
+    }
+  </style>
+</head>
+<body>
+
+<header>🛍️ Vecwy’s Pet Shop Hub</header>
+
+<main>
+  <h1>Choose Your Store</h1>
+  <div class="store-grid">
+    <!-- Grow A Garden -->
+    <div class="store-card">
+      <div class="store-title">🌱 Grow A Garden</div>
+      <a href="index.html" class="store-button">Enter Store</a>
+    </div>
+
+    <!-- Steal a Brainrot (coming soon) -->
+    <div class="store-card">
+      <div class="store-title">🧠 Steal a Brainrot</div>
+      <a class="store-button disabled">Coming Soon</a>
+    </div>
+  </div>
+</main>
+
+</body>
+</html>
