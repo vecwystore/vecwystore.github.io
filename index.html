@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -9,9 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: 'Montserrat', sans-serif;
@@ -44,10 +42,37 @@
       color: #f0f0f0;
     }
 
+    .section-btns {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .section-btns button {
+      background: #ffb347;
+      border: none;
+      color: #121212;
+      font-weight: 700;
+      padding: 10px 20px;
+      margin: 0 10px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #ffb347;
+      transition: background 0.3s ease;
+    }
+    .section-btns button:hover {
+      background: #ffa500;
+    }
+
     .products-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
       gap: 25px;
+    }
+
+    /* Limited sales grid: auto-wrap evenly */
+    .limited-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 25px;
+      justify-items: center;
     }
 
     .product-card {
@@ -60,6 +85,8 @@
       padding: 15px 15px 25px;
       transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
       color: #ddd;
+      width: 100%;
+      max-width: 240px;
     }
 
     .product-card:hover {
@@ -84,26 +111,9 @@
       text-align: center;
     }
 
-    .price-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 15px;
-    }
-
-    .old-price {
-      text-decoration: line-through;
-      color: #888;
-      font-weight: 500;
-      font-size: 0.9rem;
-      margin-right: 8px;
-    }
-
-    .product-price {
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: #ffb347;
-    }
+    .price-wrapper { display: flex; justify-content: center; align-items: center; margin-bottom: 15px; }
+    .old-price { text-decoration: line-through; color: #888; font-weight: 500; font-size: 0.9rem; margin-right: 8px; }
+    .product-price { font-weight: 700; font-size: 1.1rem; color: #ffb347; }
 
     .btn-buy {
       background-color: #ffb347;
@@ -119,547 +129,101 @@
       font-size: 1rem;
       user-select: none;
     }
-
-    .btn-buy:hover {
-      background-color: #ffa500;
-    }
-
-    /* Cart popup */
-    #cartPopup {
-      position: fixed;
-      right: 20px;
-      top: 20px;
-      background: #222;
-      border: 2px solid #ffb347;
-      border-radius: 5px;
-      width: 320px;
-      max-height: 400px;
-      overflow-y: auto;
-      color: #ddd;
-      display: none;
-      flex-direction: column;
-      padding: 15px;
-      box-shadow: 0 0 15px #ffb347;
-      z-index: 999;
-    }
-
-    #cartPopup h3 {
-      margin-top: 0;
-      font-weight: 700;
-      font-size: 1.4rem;
-      color: #ffb347;
-      user-select: none;
-    }
-
-    #cartItems {
-      flex-grow: 1;
-      margin-bottom: 15px;
-    }
-
-    .cart-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-      font-size: 1rem;
-    }
-
-    #cartTotal {
-      font-weight: 700;
-      font-size: 1.2rem;
-      margin-bottom: 15px;
-      text-align: right;
-      color: #ffb347;
-    }
-
-    #checkoutBtn {
-      background-color: #10b981;
-      border: none;
-      padding: 12px;
-      font-weight: 700;
-      font-size: 1.1rem;
-      cursor: pointer;
-      color: white;
-      border-radius: 0;
-      user-select: none;
-      box-shadow: 0 0 10px #10b981;
-      width: 100%;
-      transition: background-color 0.3s ease;
-      text-align: center;
-      text-decoration: none;
-      display: block;
-      pointer-events: none;
-      opacity: 0.5;
-    }
-    #checkoutBtn.enabled {
-      pointer-events: auto;
-      opacity: 1;
-    }
-    #checkoutBtn:hover.enabled {
-      background-color: #059669;
-      box-shadow: 0 0 14px #059669;
-    }
-
-    /* Cart open button */
-    #cartOpenBtn {
-      position: fixed;
-      right: 20px;
-      bottom: 20px;
-      background: #ffb347;
-      border: none;
-      padding: 15px;
-      border-radius: 50%;
-      font-size: 1.5rem;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 0 15px #ffb347;
-      color: #121212;
-      user-select: none;
-      z-index: 1000;
-    }
-
-    /* Remove button style */
-    .remove-btn {
-      margin-left: 10px;
-      background: transparent;
-      border: none;
-      color: #ff6b6b;
-      cursor: pointer;
-      font-weight: 700;
-      font-size: 1rem;
-    }
-
-    /* Message icon above cart */
-    #messageIcon {
-      position: fixed;
-      right: 20px;
-      bottom: 100px;
-      background: #1044b4;
-      border-radius: 50%;
-      padding: 15px;
-      font-size: 1.5rem;
-      color: white;
-      box-shadow: 0 0 15px #060561;
-      cursor: pointer;
-      user-select: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-decoration: none;
-      z-index: 1001;
-    }
+    .btn-buy:hover { background-color: #ffa500; }
 
     /* ===== RAINBOW GLOW FOR LIMITED DEALS ===== */
-
-    /* Rainbow gradient animation for border & glow */
     @keyframes rainbowGlow {
-      0%, 100% {
-        filter: drop-shadow(0 0 8px red);
-        border-color: red;
-        color: red;
-        text-shadow: 0 0 8px red;
-      }
-      14% {
-        filter: drop-shadow(0 0 8px orange);
-        border-color: orange;
-        color: orange;
-        text-shadow: 0 0 8px orange;
-      }
-      28% {
-        filter: drop-shadow(0 0 8px yellow);
-        border-color: yellow;
-        color: yellow;
-        text-shadow: 0 0 8px yellow;
-      }
-      42% {
-        filter: drop-shadow(0 0 8px green);
-        border-color: green;
-        color: green;
-        text-shadow: 0 0 8px green;
-      }
-      56% {
-        filter: drop-shadow(0 0 8px blue);
-        border-color: blue;
-        color: blue;
-        text-shadow: 0 0 8px blue;
-      }
-      70% {
-        filter: drop-shadow(0 0 8px indigo);
-        border-color: indigo;
-        color: indigo;
-        text-shadow: 0 0 8px indigo;
-      }
-      84% {
-        filter: drop-shadow(0 0 8px violet);
-        border-color: violet;
-        color: violet;
-        text-shadow: 0 0 8px violet;
-      }
+      0%, 100% { filter: drop-shadow(0 0 8px red); border-color: red; color: red; text-shadow: 0 0 8px red; }
+      14% { filter: drop-shadow(0 0 8px orange); border-color: orange; color: orange; text-shadow: 0 0 8px orange; }
+      28% { filter: drop-shadow(0 0 8px yellow); border-color: yellow; color: yellow; text-shadow: 0 0 8px yellow; }
+      42% { filter: drop-shadow(0 0 8px green); border-color: green; color: green; text-shadow: 0 0 8px green; }
+      56% { filter: drop-shadow(0 0 8px blue); border-color: blue; color: blue; text-shadow: 0 0 8px blue; }
+      70% { filter: drop-shadow(0 0 8px indigo); border-color: indigo; color: indigo; text-shadow: 0 0 8px indigo; }
+      84% { filter: drop-shadow(0 0 8px violet); border-color: violet; color: violet; text-shadow: 0 0 8px violet; }
     }
 
-    .limited-deal {
-      border-width: 3px !important;
-      animation: rainbowGlow 3s linear infinite;
-      box-shadow: 0 0 15px 5px rgba(255 0 255 / 0.6);
-      position: relative;
-      z-index: 10;
-    }
+    .limited-deal { border-width: 3px !important; animation: rainbowGlow 3s linear infinite; box-shadow: 0 0 15px 5px rgba(255 0 255 / 0.6); position: relative; z-index: 10; }
+    .limited-deal .product-name { animation: rainbowGlow 3s linear infinite; font-weight: 800; font-size: 1.3rem; text-transform: uppercase; color: #fff !important; }
 
-    /* Glowing product name */
-    .limited-deal .product-name {
-      animation: rainbowGlow 3s linear infinite;
-      font-weight: 800;
-      font-size: 1.3rem;
-      text-transform: uppercase;
-      color: #fff !important; /* override normal color */
-    }
+    .back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: #47a6ff;
+  color: #1f1f1f;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
 
-    /* Glowing rainbow button */
-    .limited-deal .btn-buy {
-      background: linear-gradient(270deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff);
-      background-size: 1400% 1400%;
-      animation: rainbowGlowBtn 8s ease infinite;
-      color: #121212;
-      font-weight: 800;
-      box-shadow: 0 0 10px #ffb347;
-      border-radius: 4px;
-      border: none;
-      cursor: pointer;
-      transition: filter 0.3s ease;
-    }
+.back-button:hover {
+  background: #b8f4ff;
+  transform: translateY(-2px);
+}
 
-    @keyframes rainbowGlowBtn {
-      0%{background-position:0% 50%}
-      50%{background-position:100% 50%}
-      100%{background-position:0% 50%}
-    }
-
-    .limited-deal .btn-buy:hover {
-      filter: brightness(1.2);
-    }
   </style>
+  <a href="hub.html" class="back-button">← Back to Hub</a>
 </head>
 <body>
-
 <header>🚚 Orders Delivered 24/7 — Instant Fulfillment Guaranteed!</header>
 
 <div class="container">
   <h1 class="shop-title">Welcome to Vecwy’s Pet Shop 🛍️</h1>
 
+  <!-- Section Buttons -->
+  <div class="section-btns">
+    <button onclick="document.getElementById('limited-section').scrollIntoView({behavior:'smooth'})">Limited - Sales</button>
+    <button onclick="document.getElementById('allpets-section').scrollIntoView({behavior:'smooth'})">All Pets</button>
+  </div>
+
+  <!-- Limited Sales Section -->
+  <h1 class="shop-title" id="limited-section">🔥 24H Limited Sales 🔥</h1>
+  <div class="limited-grid">
+    <div class="product-card limited-deal" data-name="Dragonfly (24H SALE)" data-price="4">
+      <img class="product-image" src="https://i.postimg.cc/zfXFNC74/Dragonfly-Icon-removebg-preview.png" alt="Dragonfly 24H SALE" />
+      <div class="product-name">Dragonfly — 24H SALE</div>
+      <div class="price-wrapper"><span class="old-price">$6</span><span class="product-price">$4</span></div>
+      <button class="btn-buy">Add to Cart</button>
+    </div>
+
+    <div class="product-card limited-deal" data-name="Butterfly (24H SALE)" data-price="5">
+      <img class="product-image" src="https://i.postimg.cc/pL0nDgQ1/Thy-Butterfly-V2-removebg-preview.png" alt="Butterfly 24H SALE" />
+      <div class="product-name">Butterfly — 24H SALE</div>
+      <div class="price-wrapper"><span class="old-price">$7</span><span class="product-price">$5</span></div>
+      <button class="btn-buy">Add to Cart</button>
+    </div>
+
+    <div class="product-card limited-deal" data-name="Ascended Pets (24H SALE)" data-price="6">
+      <img class="product-image" src="https://i.postimg.cc/m2wBCP6w/Mutated-pets-ROBLOX-Grow-A-Garden-ASCENDED.webp" alt="Ascended Pets 24H SALE" />
+      <div class="product-name">Ascended Pets — 24H SALE</div>
+      <div class="price-wrapper"><span class="old-price">$15</span><span class="product-price">$6</span></div>
+      <button class="btn-buy">Add to Cart</button>
+    </div>
+
+    <div class="product-card limited-deal" data-name="Mimic (24H SALE)" data-price="4">
+      <img class="product-image" src="https://i.postimg.cc/CxwjCG3d/Mimic-Octopus-Icon-removebg-preview.png" alt="Mimic 24H SALE" />
+      <div class="product-name">Mimic — 24H SALE</div>
+      <div class="price-wrapper"><span class="old-price">$5</span><span class="product-price">$4</span></div>
+      <button class="btn-buy">Add to Cart</button>
+    </div>
+
+    <div class="product-card limited-deal" data-name="T-Rex (24H SALE)" data-price="4">
+      <img class="product-image" src="https://i.postimg.cc/3JTp7jJ9/T-Rex-removebg-preview.png" alt="T-Rex 24H SALE" />
+      <div class="product-name">T-Rex — 24H SALE</div>
+      <div class="price-wrapper"><span class="old-price">$5</span><span class="product-price">$4</span></div>
+      <button class="btn-buy">Add to Cart</button>
+    </div>
+  </div>
+
+  <!-- All Pets Section -->
+  <h1 class="shop-title" id="allpets-section">🐾 All Pets 🐾</h1>
   <div class="products-grid">
-
-    <!-- Added 'limited-deal' class to highlight these -->
-    <div class="product-card limited-deal" data-name="7x HUGE RB TABBY" data-price="400">
-      <img class="product-image" src="https://i.postimg.cc/6pV0YrMb/image.png" alt="7x HUGE RB TABBY" />
-      <div class="product-name">7x Huge RB Tabby LIMITED DEAL</div>
-      <div class="price-wrapper">
-        <span class="old-price">$600</span>
-        <span class="product-price">$400</span>
-      </div>
-      <button class="btn-buy">Add to Cart</button>
-    </div>
-
-    <div class="product-card limited-deal" data-name="TITAN MIMIC OCTOPUS" data-price="300">
-      <img class="product-image" src="https://i.postimg.cc/vHwMnyk7/image.png" alt="TITAN MIMIC OCTOPUS" />
-      <div class="product-name">Titan Mimic Octopus LIMITED DEAL</div>
-      <div class="price-wrapper">
-        <span class="old-price">$450</span>
-        <span class="product-price">$300</span>
-      </div>
-      <button class="btn-buy">Add to Cart</button>
-    </div>
-
-    <div class="product-card limited-deal" data-name="double rb dilo" data-price="180">
-      <img class="product-image" src="https://i.postimg.cc/yxz5D1xk/image.png" alt="double rb dilo" />
-      <div class="product-name">Double Rainbow Dilo LIMITED DEAL</div>
-      <div class="price-wrapper">
-        <span class="old-price">$220</span>
-        <span class="product-price">$180</span>
-      </div>
-      <button class="btn-buy">Add to Cart</button>
-    </div>
-
-    <div class="product-card limited-deal" data-name="1x HUGE RB TABBY" data-price="70">
-      <img class="product-image" src="https://i.postimg.cc/W1fM95Mn/rb1.png" alt="1x HUGE RB TABBY" />
-      <div class="product-name">1x Huge Rainbow Tabby LIMITED DEAL</div>
-      <div class="price-wrapper">
-        <span class="old-price">$100</span>
-        <span class="product-price">$70</span>
-      </div>
-      <button class="btn-buy">Add to Cart</button>
-    </div>
-
-    <!-- Kitsune - $20 -->
-    <div class="product-card" data-name="Kitsune" data-price="20">
-      <img class="product-image" src="https://i.postimg.cc/pr8DCqV5/Kitsune-removebg-preview.png" alt="Kitsune" />
-      <div class="product-name">Kitsune</div>
-      <div class="price-wrapper">
-        <span class="old-price">$40</span>
-        <span class="product-price">$20</span>
-      </div>
-      <button class="btn-buy">Add to Cart</button>
-    </div>
-
-    <!-- Ascended Pets - $15 -->
-    <div class="product-card" data-name="Ascended Pets" data-price="15">
-      <img class="product-image" src="https://i.postimg.cc/m2wBCP6w/Mutated-pets-ROBLOX-Grow-A-Garden-ASCENDED.webp" alt="Ascended Pets" />
-      <div class="product-name">Ascended Pets</div>
-      <div class="price-wrapper">
-        <span class="old-price">$21</span>
-        <span class="product-price">$15</span>
-      </div>
-      <button class="btn-buy">Add to Cart</button>
-    </div>
-
-    <!-- Raccoon - $10 -->
-    <div class="product-card" data-name="Raccoon" data-price="10.5">
-      <img class="product-image" src="https://i.postimg.cc/qRxnSzVj/Raccon-Better-Quality-removebg-preview.png" alt="Raccoon" />
-      <div class="product-name">Raccoon</div>
-      <div class="price-wrapper">
-        <span class="old-price">$14</span>
-        <span class="product-price">$10.5</span>
-      </div>
-      <button class="btn-buy">Add to Cart</button>
-    </div>
-
-    <div class="product-card" data-name="Disco Bee" data-price="10">
-      <img class="product-image" src="https://i.postimg.cc/GmRj7wyL/Disco-Bee-Icon-removebg-preview.png" alt="Disco Bee" />
-      <div class="product-name">Disco Bee</div>
-      <div class="price-wrapper">
-        <span class="old-price">$18</span>
-        <span class="product-price">$10</span>
-      </div>
-      <button class="btn-buy">Add to Cart</button>
-    </div>
-
-    <div class="product-card" data-name="Fennec Fox" data-price="8.5">
-      <img class="product-image" src="https://i.postimg.cc/W3dmFsQn/Fennec-Fox-Icon-removebg-preview.png" alt="Fennec Fox" />
-      <div class="product-name">Fennec Fox</div>
-      <div class="price-wrapper">
-        <span class="old-price">$14</span>
-        <span class="product-price">$8.5</span>
-      </div>
-      <button class="btn-buy">Add to Cart</button>
-    </div>
-
-    <div class="product-card" data-name="Spino" data-price="7">
-      <img class="product-image" src="https://i.postimg.cc/7hvz501H/Spinosaurus-removebg-preview.png" alt="Spinosaurus" />
-      <div class="product-name">Spino</div>
-      <div class="price-wrapper">
-        <span class="old-price">$13</span>
-        <span class="product-price">$7</span>
-      </div>
-      <button class="btn-buy">Add to Cart</button>
-    </div>
-
-    <div class="product-card" data-name="Butterfly" data-price="7">
-      <img class="product-image" src="https://i.postimg.cc/pL0nDgQ1/Thy-Butterfly-V2-removebg-preview.png" alt="Butterfly" />
-      <div class="product-name">Butterfly</div>
-      <div class="price-wrapper">
-        <span class="old-price">$13</span>
-        <span class="product-price">$7</span>
-      </div>
-      <button class="btn-buy">Add to Cart</button>
-    </div>
-
-    <div class="product-card" data-name="Dragonfly" data-price="6">
-      <img class="product-image" src="https://i.postimg.cc/zfXFNC74/Dragonfly-Icon-removebg-preview.png" alt="Dragonfly" />
-      <div class="product-name">Dragonfly</div>
-      <div class="price-wrapper">
-        <span class="old-price">$12</span>
-        <span class="product-price">$6</span>
-      </div>
-      <button class="btn-buy">Add to Cart</button>
-    </div>
-
-    <!-- T-Rex - $5 -->
-    <div class="product-card" data-name="T-Rex" data-price="5">
-      <img class="product-image" src="https://i.postimg.cc/3JTp7jJ9/T-Rex-removebg-preview.png" alt="T-Rex" />
-      <div class="product-name">T-Rex</div>
-      <div class="price-wrapper">
-        <span class="old-price">$12</span>
-        <span class="product-price">$5</span>
-      </div>
-      <button class="btn-buy">Add to Cart</button>
-    </div>
-
-    <!-- Mimic - $5 -->
-    <div class="product-card" data-name="Mimic" data-price="5">
-      <img class="product-image" src="https://i.postimg.cc/CxwjCG3d/Mimic-Octopus-Icon-removebg-preview.png" alt="Mimic" />
-      <div class="product-name">Mimic</div>
-      <div class="price-wrapper">
-        <span class="old-price">$12</span>
-        <span class="product-price">$5</span>
-      </div>
-      <button class="btn-buy">Add to Cart</button>
-    </div>
-
-    <div class="product-card" data-name="Queen Bee" data-price="5">
-      <img class="product-image" src="https://i.postimg.cc/3x92tyh1/Queen-bee-removebg-preview.png" alt="Queen Bee" />
-      <div class="product-name">Queen Bee</div>
-      <div class="price-wrapper">
-        <span class="old-price">$10</span>
-        <span class="product-price">$5</span>
-      </div>
-      <button class="btn-buy">Add to Cart</button>
-    </div>
-
-    <div class="product-card" data-name="Chicken Zombie" data-price="5">
-      <img class="product-image" src="https://i.postimg.cc/ydp9s2xZ/Chicken-Zombie-Icon-removebg-preview.png" alt="Chicken Zombie" />
-      <div class="product-name">Chicken Zombie</div>
-      <div class="price-wrapper">
-        <span class="old-price">$10</span>
-        <span class="product-price">$5</span>
-      </div>
-      <button class="btn-buy">Add to Cart</button>
-    </div>
-
-    <!-- Corrupt Kitsune - $4 -->
-    <div class="product-card" data-name="Corrupt Kitsune" data-price="4">
-      <img class="product-image" src="https://i.postimg.cc/26ybcTG8/Corrupted-Kitsune-removebg-preview.png" alt="Corrupt Kitsune" />
-      <div class="product-name">Corrupt Kitsune</div>
-      <div class="price-wrapper">
-        <span class="old-price">$15</span>
-        <span class="product-price">$4</span>
-      </div>
-      <button class="btn-buy">Add to Cart</button>
-    </div>
-
-    <div class="product-card" data-name="Age 75 Pet" data-price="4.5">
-      <img class="product-image" src="https://i.postimg.cc/qBhRYNsw/grow-a-garden-age-75-pet-1749296632-ae489ed5-progressive.jpg" alt="Age 75 Pet" />
-      <div class="product-name">Age 75 Pet</div>
-      <div class="price-wrapper">
-        <span class="old-price">$9</span>
-        <span class="product-price">$4.5</span>
-      </div>
-      <button class="btn-buy">Add to Cart</button>
-    </div>
-
-    <div class="product-card" data-name="Age 60 Pet" data-price="3.5">
-      <img class="product-image" src="https://i.postimg.cc/SQ60Jqkq/854efd2a-3bbd-41a8-ac61-8337990a473c.jpg" alt="Age 60 Pet" />
-      <div class="product-name">Age 60 Pet</div>
-      <div class="price-wrapper">
-        <span class="old-price">$8</span>
-        <span class="product-price">$3.5</span>
-      </div>
-      <button class="btn-buy">Add to Cart</button>
-    </div>
-
+    <div class="product-card limited-deal" data-name="7x HUGE RB TABBY" data-price="400"> <img class="product-image" src="https://i.postimg.cc/6pV0YrMb/image.png" alt="7x HUGE RB TABBY" /> <div class="product-name">7x Huge RB Tabby LIMITED DEAL</div> <div class="price-wrapper"> <span class="old-price">$600</span> <span class="product-price">$300</span> </div> <button class="btn-buy">Add to Cart</button> </div> <div class="product-card limited-deal" data-name="TITAN MIMIC OCTOPUS" data-price="300"> <img class="product-image" src="https://i.postimg.cc/vHwMnyk7/image.png" alt="TITAN MIMIC OCTOPUS" /> <div class="product-name">Titan Mimic Octopus LIMITED DEAL</div> <div class="price-wrapper"> <span class="old-price">$450</span> <span class="product-price">$350</span> </div> <button class="btn-buy">Add to Cart</button> </div> <div class="product-card limited-deal" data-name="1x HUGE RB TABBY" data-price="70"> <img class="product-image" src="https://i.postimg.cc/W1fM95Mn/rb1.png" alt="1x HUGE RB TABBY" /> <div class="product-name">1x Huge Rainbow Tabby LIMITED DEAL</div> <div class="price-wrapper"> <span class="old-price">$100</span> <span class="product-price">$50</span> </div> <button class="btn-buy">Add to Cart</button> </div> <!-- Kitsune - $20 --> <div class="product-card" data-name="Kitsune" data-price="20"> <img class="product-image" src="https://i.postimg.cc/pr8DCqV5/Kitsune-removebg-preview.png" alt="Kitsune" /> <div class="product-name">Kitsune</div> <div class="price-wrapper"> <span class="old-price">$40</span> <span class="product-price">$20</span> </div> <button class="btn-buy">Add to Cart</button> </div> <!-- Ascended Pets - $15 --> <div class="product-card" data-name="Ascended Pets" data-price="15"> <img class="product-image" src="https://i.postimg.cc/m2wBCP6w/Mutated-pets-ROBLOX-Grow-A-Garden-ASCENDED.webp" alt="Ascended Pets" /> <div class="product-name">Ascended Pets</div> <div class="price-wrapper"> <span class="old-price">$21</span> <span class="product-price">$15</span> </div> <button class="btn-buy">Add to Cart</button> </div> <!-- Raccoon - $10 --> <div class="product-card" data-name="Raccoon" data-price="10"> <img class="product-image" src="https://i.postimg.cc/qRxnSzVj/Raccon-Better-Quality-removebg-preview.png" alt="Raccoon" /> <div class="product-name">Raccoon</div> <div class="price-wrapper"> <span class="old-price">$14</span> <span class="product-price">$10</span> </div> <button class="btn-buy">Add to Cart</button> </div> <div class="product-card" data-name="Disco Bee" data-price="10"> <img class="product-image" src="https://i.postimg.cc/GmRj7wyL/Disco-Bee-Icon-removebg-preview.png" alt="Disco Bee" /> <div class="product-name">Disco Bee</div> <div class="price-wrapper"> <span class="old-price">$18</span> <span class="product-price">$10</span> </div> <button class="btn-buy">Add to Cart</button> </div> <div class="product-card" data-name="Fennec Fox" data-price="8.5"> <img class="product-image" src="https://i.postimg.cc/W3dmFsQn/Fennec-Fox-Icon-removebg-preview.png" alt="Fennec Fox" /> <div class="product-name">Fennec Fox</div> <div class="price-wrapper"> <span class="old-price">$14</span> <span class="product-price">$8.5</span> </div> <button class="btn-buy">Add to Cart</button> </div> <div class="product-card" data-name="Spino" data-price="7"> <img class="product-image" src="https://i.postimg.cc/7hvz501H/Spinosaurus-removebg-preview.png" alt="Spinosaurus" /> <div class="product-name">Spino</div> <div class="price-wrapper"> <span class="old-price">$13</span> <span class="product-price">$7</span> </div> <button class="btn-buy">Add to Cart</button> </div> <div class="product-card" data-name="Butterfly" data-price="7"> <img class="product-image" src="https://i.postimg.cc/pL0nDgQ1/Thy-Butterfly-V2-removebg-preview.png" alt="Butterfly" /> <div class="product-name">Butterfly</div> <div class="price-wrapper"> <span class="old-price">$13</span> <span class="product-price">$7</span> </div> <button class="btn-buy">Add to Cart</button> </div> <div class="product-card" data-name="Dragonfly" data-price="6"> <img class="product-image" src="https://i.postimg.cc/zfXFNC74/Dragonfly-Icon-removebg-preview.png" alt="Dragonfly" /> <div class="product-name">Dragonfly</div> <div class="price-wrapper"> <span class="old-price">$12</span> <span class="product-price">$6</span> </div> <button class="btn-buy">Add to Cart</button> </div> <!-- T-Rex - $5 --> <div class="product-card" data-name="T-Rex" data-price="5"> <img class="product-image" src="https://i.postimg.cc/3JTp7jJ9/T-Rex-removebg-preview.png" alt="T-Rex" /> <div class="product-name">T-Rex</div> <div class="price-wrapper"> <span class="old-price">$12</span> <span class="product-price">$5</span> </div> <button class="btn-buy">Add to Cart</button> </div> <!-- Mimic - $5 --> <div class="product-card" data-name="Mimic" data-price="5"> <img class="product-image" src="https://i.postimg.cc/CxwjCG3d/Mimic-Octopus-Icon-removebg-preview.png" alt="Mimic" /> <div class="product-name">Mimic</div> <div class="price-wrapper"> <span class="old-price">$12</span> <span class="product-price">$5</span> </div> <button class="btn-buy">Add to Cart</button> </div> <div class="product-card" data-name="Queen Bee" data-price="5"> <img class="product-image" src="https://i.postimg.cc/3x92tyh1/Queen-bee-removebg-preview.png" alt="Queen Bee" /> <div class="product-name">Queen Bee</div> <div class="price-wrapper"> <span class="old-price">$10</span> <span class="product-price">$5</span> </div> <button class="btn-buy">Add to Cart</button> </div> <div class="product-card" data-name="Chicken Zombie" data-price="5"> <img class="product-image" src="https://i.postimg.cc/ydp9s2xZ/Chicken-Zombie-Icon-removebg-preview.png" alt="Chicken Zombie" /> <div class="product-name">Chicken Zombie</div> <div class="price-wrapper"> <span class="old-price">$10</span> <span class="product-price">$5</span> </div> <button class="btn-buy">Add to Cart</button> </div> <!-- Corrupt Kitsune - $4 --> <div class="product-card" data-name="Corrupt Kitsune" data-price="4"> <img class="product-image" src="https://i.postimg.cc/26ybcTG8/Corrupted-Kitsune-removebg-preview.png" alt="Corrupt Kitsune" /> <div class="product-name">Corrupt Kitsune</div> <div class="price-wrapper"> <span class="old-price">$15</span> <span class="product-price">$4</span> </div> <button class="btn-buy">Add to Cart</button> </div> <div class="product-card" data-name="Age 75 Pet" data-price="4.5"> <img class="product-image" src="https://i.postimg.cc/qBhRYNsw/grow-a-garden-age-75-pet-1749296632-ae489ed5-progressive.jpg" alt="Age 75 Pet" /> <div class="product-name">Age 75 Pet</div> <div class="price-wrapper"> <span class="old-price">$9</span> <span class="product-price">$4.5</span> </div> <button class="btn-buy">Add to Cart</button> </div> <div class="product-card" data-name="Age 60 Pet" data-price="3.5"> <img class="product-image" src="https://i.postimg.cc/SQ60Jqkq/854efd2a-3bbd-41a8-ac61-8337990a473c.jpg" alt="Age 60 Pet" /> <div class="product-name">Age 60 Pet</div> <div class="price-wrapper"> <span class="old-price">$8</span> <span class="product-price">$3.5</span> </div> <button class="btn-buy">Add to Cart</button> </div> </div> </div>
   </div>
 </div>
 
-<!-- Cart Popup -->
-<div id="cartPopup">
-  <h3>Your Cart</h3>
-  <div id="cartItems">No items in cart.</div>
-  <div id="cartTotal"></div>
-  <a href="checkout.html" id="checkoutBtn">Proceed to Checkout</a>
-</div>
-
-<!-- Message icon above cart -->
-<a href="contact.html" id="messageIcon" title="Contact Support">💬</a>
-
-<!-- Cart Open Button -->
-<button id="cartOpenBtn" title="Open Cart">🛒</button>
-
-<script>
-  const cartOpenBtn = document.getElementById('cartOpenBtn');
-  const cartPopup = document.getElementById('cartPopup');
-  const cartItemsContainer = document.getElementById('cartItems');
-  const cartTotalDisplay = document.getElementById('cartTotal');
-  const checkoutBtn = document.getElementById('checkoutBtn');
-
-  let cart = {};
-
-  function updateCartUI() {
-    const items = Object.values(cart);
-    if (items.length === 0) {
-      cartItemsContainer.textContent = "No items in cart.";
-      cartTotalDisplay.textContent = "";
-      checkoutBtn.classList.remove('enabled');
-      checkoutBtn.style.pointerEvents = 'none';
-      checkoutBtn.style.opacity = '0.5';
-      return;
-    }
-
-    cartItemsContainer.innerHTML = '';
-
-    let total = 0;
-
-    items.forEach(item => {
-      total += item.price * item.qty;
-
-      const div = document.createElement('div');
-      div.classList.add('cart-item');
-
-      const nameQty = document.createElement('span');
-      nameQty.textContent = `${item.name} x${item.qty} - $${(item.price * item.qty).toFixed(2)}`;
-
-      const removeBtn = document.createElement('button');
-      removeBtn.textContent = '✖';
-      removeBtn.classList.add('remove-btn');
-      removeBtn.title = 'Remove item';
-      removeBtn.style.marginLeft = '10px';
-      removeBtn.style.background = 'transparent';
-      removeBtn.style.border = 'none';
-      removeBtn.style.color = '#ff6b6b';
-      removeBtn.style.cursor = 'pointer';
-      removeBtn.style.fontWeight = '700';
-      removeBtn.style.fontSize = '1rem';
-      removeBtn.addEventListener('click', () => {
-        delete cart[item.name];
-        updateCartUI();
-      });
-
-      div.appendChild(nameQty);
-      div.appendChild(removeBtn);
-      cartItemsContainer.appendChild(div);
-    });
-
-    cartTotalDisplay.textContent = `Total: $${total.toFixed(2)}`;
-    checkoutBtn.classList.add('enabled');
-    checkoutBtn.style.pointerEvents = 'auto';
-    checkoutBtn.style.opacity = '1';
-  }
-
-  // Toggle cart popup
-  cartOpenBtn.addEventListener('click', () => {
-    if (cartPopup.style.display === 'flex') {
-      cartPopup.style.display = 'none';
-    } else {
-      cartPopup.style.display = 'flex';
-      updateCartUI();
-    }
-  });
-
-  // Add to cart buttons
-  document.querySelectorAll('.btn-buy').forEach(button => {
-    button.addEventListener('click', e => {
-      const card = e.target.closest('.product-card');
-      const name = card.dataset.name;
-      const price = parseFloat(card.dataset.price);
-
-      if (cart[name]) {
-        cart[name].qty++;
-      } else {
-        cart[name] = { name, price, qty: 1 };
-      }
-
-      updateCartUI();
-      cartPopup.style.display = 'flex';
-    });
-  });
-
-  // Checkout button click
-  checkoutBtn.addEventListener('click', e => {
-    if (!checkoutBtn.classList.contains('enabled')) {
-      e.preventDefault();
-      alert('Your cart is empty. Please add items before proceeding to checkout.');
-    }
-  });
-</script>
-
 </body>
 </html>
-
-
